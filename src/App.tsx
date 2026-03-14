@@ -176,7 +176,7 @@ const EnterScreen = ({ onEnter }: { onEnter: () => void }) => {
 const Marquee = () => {
   // Create an array with just the Creeper MC item, repeated to fill the screen
   const items = Array(6).fill({ 
-    icon: <img src="https://iili.io/q0WkTNe.th.png" alt="Creeper MC" className="w-12 h-12 md:w-16 md:h-16 rounded-xl object-cover" referrerPolicy="no-referrer" />, 
+    icon: <img src="https://i.postimg.cc/C1HfGYgS/a-fdab96531631a945333f23b1d1f3af8f.png" alt="Creeper MC" className="w-12 h-12 md:w-16 md:h-16 rounded-xl object-cover" referrerPolicy="no-referrer" />, 
     text: "CREEPER MC" 
   });
 
