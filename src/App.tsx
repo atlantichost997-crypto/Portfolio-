@@ -175,6 +175,7 @@ const EnterScreen = ({ onEnter }: { onEnter: () => void }) => {
 
 const Marquee = () => {
   const items = [
+    { icon: <img src="https://i.ibb.co/zWBFHnbX/a-fdab96531631a945333f23b1d1f3af8f.gif" alt="Creeper MC" className="w-8 h-8 rounded-md object-cover" referrerPolicy="no-referrer" />, text: "CREEPER MC" },
     { icon: <Cpu size={32} className="text-purple-400" />, text: "React" },
     { icon: <Server size={32} className="text-cyan-400" />, text: "Node.js" },
     { icon: <Database size={32} className="text-pink-400" />, text: "MongoDB" },
