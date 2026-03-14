@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
+import { motion, useScroll, useTransform, AnimatePresence, useMotionValueEvent } from 'motion/react';
 import { 
   Terminal, 
   Server, 
@@ -13,10 +13,89 @@ import {
   ChevronDown,
   ExternalLink,
   Sparkles,
-  User
+  User,
+  Cpu,
+  Database,
+  Globe,
+  Layout,
+  Layers,
+  Box,
+  Zap,
+  Home,
+  Briefcase
 } from 'lucide-react';
 
 // --- Components ---
+
+const CustomCursor = () => {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
+  return (
+    <div className="hidden md:block">
+      <motion.div
+        className="fixed top-0 left-0 w-3 h-3 rounded-full bg-white pointer-events-none z-[9999] mix-blend-difference"
+        animate={{ x: mousePos.x - 6, y: mousePos.y - 6 }}
+        transition={{ type: "spring", stiffness: 1000, damping: 40, mass: 0.1 }}
+      />
+      <motion.div
+        className="fixed top-0 left-0 w-10 h-10 rounded-full border border-purple-500/50 bg-purple-500/10 pointer-events-none z-[9998] backdrop-blur-[2px]"
+        animate={{ x: mousePos.x - 20, y: mousePos.y - 20 }}
+        transition={{ type: "spring", stiffness: 200, damping: 20, mass: 0.8 }}
+      />
+    </div>
+  );
+};
+
+const Header = () => {
+  const { scrollY } = useScroll();
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (latest < 50) {
+      setVisible(true);
+    } else if (latest > lastScrollY) {
+      setVisible(false); // Scrolling down
+    } else {
+      setVisible(true); // Scrolling up
+    }
+    setLastScrollY(latest);
+  });
+
+  return (
+    <motion.header
+      initial={{ x: "120%", opacity: 0 }}
+      animate={{ x: visible ? 0 : "120%", opacity: visible ? 1 : 0 }}
+      transition={{ type: "spring", stiffness: 200, damping: 25 }}
+      className="fixed top-6 right-6 z-50 glass-card rounded-full px-2 py-2 flex gap-2 items-center shadow-[0_0_30px_rgba(168,85,247,0.2)] border border-white/10 backdrop-blur-xl"
+    >
+      <a href="#" className="p-3 rounded-full hover:bg-white/10 text-zinc-400 hover:text-purple-400 transition-all duration-300 group relative">
+        <Home size={20} />
+        <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity">Home</span>
+      </a>
+      <a href="#" className="p-3 rounded-full hover:bg-white/10 text-zinc-400 hover:text-pink-400 transition-all duration-300 group relative">
+        <Briefcase size={20} />
+        <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity">Work</span>
+      </a>
+      <a href="#" className="p-3 rounded-full hover:bg-white/10 text-zinc-400 hover:text-cyan-400 transition-all duration-300 group relative">
+        <User size={20} />
+        <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-xs font-mono opacity-0 group-hover:opacity-100 transition-opacity">About</span>
+      </a>
+      <div className="w-[1px] h-8 bg-white/10 mx-2"></div>
+      <button className="px-6 py-2 rounded-full bg-white text-black font-semibold hover:scale-105 transition-transform duration-300 text-sm">
+        Hire Me
+      </button>
+    </motion.header>
+  );
+};
 
 const AudioPlayer = ({ isPlaying, togglePlay }: { isPlaying: boolean, togglePlay: () => void }) => {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -95,21 +174,37 @@ const EnterScreen = ({ onEnter }: { onEnter: () => void }) => {
 };
 
 const Marquee = () => {
+  const items = [
+    { icon: <Cpu size={32} className="text-purple-400" />, text: "React" },
+    { icon: <Server size={32} className="text-cyan-400" />, text: "Node.js" },
+    { icon: <Database size={32} className="text-pink-400" />, text: "MongoDB" },
+    { icon: <Box size={32} className="text-emerald-400" />, text: "Java" },
+    { icon: <Terminal size={32} className="text-yellow-400" />, text: "TypeScript" },
+    { icon: <Layers size={32} className="text-blue-400" />, text: "Next.js" },
+    { icon: <Globe size={32} className="text-indigo-400" />, text: "Web3" },
+    { icon: <Zap size={32} className="text-orange-400" />, text: "Performance" },
+  ];
+
   return (
-    <div className="relative w-full py-6 overflow-hidden glass-card border-y border-white/10 rotate-[-2deg] scale-110 z-20 shadow-[0_0_40px_rgba(168,85,247,0.1)] backdrop-blur-2xl">
+    <div className="relative w-full py-8 overflow-hidden glass-card border-y border-white/10 rotate-[-2deg] scale-110 z-20 shadow-[0_0_40px_rgba(168,85,247,0.1)] backdrop-blur-2xl">
       <motion.div 
         className="flex whitespace-nowrap"
         animate={{ x: ["0%", "-50%"] }}
-        transition={{ repeat: Infinity, ease: "linear", duration: 25 }}
+        transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
       >
-        {[...Array(4)].map((_, i) => (
-          <div key={i} className="flex items-center text-2xl md:text-4xl font-bold uppercase tracking-wider mx-4 text-white/80">
-            <span>Creative Developer</span>
-            <span className="mx-8 text-purple-400/50">✦</span>
-            <span>Minecraft Architect</span>
-            <span className="mx-8 text-pink-400/50">✦</span>
-            <span>UI/UX Enthusiast</span>
-            <span className="mx-8 text-cyan-400/50">✦</span>
+        {[...Array(2)].map((_, i) => (
+          <div key={i} className="flex items-center gap-12 px-6">
+            {items.map((item, idx) => (
+              <div key={idx} className="flex items-center gap-4 group">
+                <div className="p-4 rounded-2xl glass-card border border-white/5 shadow-inner group-hover:scale-110 group-hover:border-white/20 transition-all duration-500 shine-effect">
+                  {item.icon}
+                </div>
+                <span className="text-2xl md:text-4xl font-bold uppercase tracking-wider text-white/50 group-hover:text-white transition-colors duration-500">
+                  {item.text}
+                </span>
+                <span className="mx-6 text-white/10">✦</span>
+              </div>
+            ))}
           </div>
         ))}
       </motion.div>
@@ -342,7 +437,7 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-zinc-500 text-sm">
           <p>© {new Date().getFullYear()} Alex. All rights reserved.</p>
           <p className="flex items-center gap-2">
-            Crafted with <Sparkles size={14} className="text-purple-400" /> and React
+            Designed By <span className="text-purple-400 font-semibold hover:text-pink-400 transition-colors cursor-pointer">CursedDev.gg</span>
           </p>
         </div>
       </div>
@@ -362,7 +457,8 @@ export default function App() {
   };
 
   return (
-    <div className="bg-[#030014] min-h-screen text-zinc-50 selection:bg-purple-500/30 selection:text-purple-200 relative overflow-hidden">
+    <div className="bg-[#030014] min-h-screen text-zinc-50 selection:bg-purple-500/30 selection:text-purple-200 relative overflow-hidden md:cursor-none">
+      <CustomCursor />
       <BlurryBackground />
       
       <AnimatePresence>
@@ -376,6 +472,7 @@ export default function App() {
           transition={{ duration: 1 }}
           className="relative z-10"
         >
+          <Header />
           <AudioPlayer isPlaying={isPlaying} togglePlay={() => setIsPlaying(!isPlaying)} />
           
           <main>
