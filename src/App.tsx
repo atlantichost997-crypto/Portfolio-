@@ -174,30 +174,29 @@ const EnterScreen = ({ onEnter }: { onEnter: () => void }) => {
 };
 
 const Marquee = () => {
-  // Create an array with just the Creeper MC item, repeated to fill the screen
-  const items = Array(6).fill({ 
-    icon: <img src="https://i.postimg.cc/C1HfGYgS/a-fdab96531631a945333f23b1d1f3af8f.png" alt="Creeper MC" className="w-12 h-12 md:w-16 md:h-16 rounded-xl object-cover" referrerPolicy="no-referrer" />, 
-    text: "CREEPER MC" 
-  });
-
   return (
     <div className="relative w-full py-8 overflow-hidden glass-card border-y border-white/10 rotate-[-2deg] scale-110 z-20 shadow-[0_0_40px_rgba(168,85,247,0.1)] backdrop-blur-2xl">
       <motion.div 
-        className="flex whitespace-nowrap"
+        className="flex w-max"
         animate={{ x: ["0%", "-50%"] }}
-        transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
+        transition={{ repeat: Infinity, ease: "linear", duration: 100 }}
       >
         {[...Array(4)].map((_, i) => (
-          <div key={i} className="flex items-center gap-12 px-6">
-            {items.map((item, idx) => (
-              <div key={idx} className="flex items-center gap-6 group">
-                <div className="p-2 rounded-2xl glass-card border border-white/5 shadow-inner group-hover:scale-110 group-hover:border-white/20 transition-all duration-500 shine-effect bg-black/20">
-                  {item.icon}
+          <div key={i} className="flex items-center gap-12 px-6 flex-shrink-0">
+            {[...Array(6)].map((_, idx) => (
+              <div key={idx} className="flex items-center gap-6 group flex-shrink-0">
+                <div className="p-2 rounded-2xl glass-card border border-white/5 shadow-inner group-hover:scale-110 group-hover:border-white/20 transition-all duration-500 shine-effect bg-black/20 flex-shrink-0">
+                  <img 
+                    src="https://i.postimg.cc/C1HfGYgS/a-fdab96531631a945333f23b1d1f3af8f.png" 
+                    alt="Creeper MC" 
+                    className="w-12 h-12 md:w-16 md:h-16 rounded-xl object-cover flex-shrink-0" 
+                    referrerPolicy="no-referrer" 
+                  />
                 </div>
-                <span className="text-3xl md:text-5xl font-black uppercase tracking-widest text-white/80 group-hover:text-white transition-colors duration-500 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]">
-                  {item.text}
+                <span className="text-3xl md:text-5xl font-black uppercase tracking-widest text-white/80 group-hover:text-white transition-colors duration-500 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)] whitespace-nowrap">
+                  CREEPER MC
                 </span>
-                <span className="mx-6 text-purple-500/50 text-3xl animate-pulse">✦</span>
+                <span className="mx-6 text-purple-500/50 text-3xl animate-pulse flex-shrink-0">✦</span>
               </div>
             ))}
           </div>
