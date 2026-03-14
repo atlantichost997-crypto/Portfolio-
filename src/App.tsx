@@ -174,36 +174,30 @@ const EnterScreen = ({ onEnter }: { onEnter: () => void }) => {
 };
 
 const Marquee = () => {
-  const items = [
-    { icon: <img src="https://i.ibb.co/zWBFHnbX/a-fdab96531631a945333f23b1d1f3af8f.gif" alt="Creeper MC" className="w-8 h-8 rounded-md object-cover" referrerPolicy="no-referrer" />, text: "CREEPER MC" },
-    { icon: <Cpu size={32} className="text-purple-400" />, text: "React" },
-    { icon: <Server size={32} className="text-cyan-400" />, text: "Node.js" },
-    { icon: <Database size={32} className="text-pink-400" />, text: "MongoDB" },
-    { icon: <Box size={32} className="text-emerald-400" />, text: "Java" },
-    { icon: <Terminal size={32} className="text-yellow-400" />, text: "TypeScript" },
-    { icon: <Layers size={32} className="text-blue-400" />, text: "Next.js" },
-    { icon: <Globe size={32} className="text-indigo-400" />, text: "Web3" },
-    { icon: <Zap size={32} className="text-orange-400" />, text: "Performance" },
-  ];
+  // Create an array with just the Creeper MC item, repeated to fill the screen
+  const items = Array(6).fill({ 
+    icon: <img src="https://i.ibb.co/zWBFHnbX/a-fdab96531631a945333f23b1d1f3af8f.gif" alt="Creeper MC" className="w-12 h-12 md:w-16 md:h-16 rounded-xl object-cover" referrerPolicy="no-referrer" />, 
+    text: "CREEPER MC" 
+  });
 
   return (
     <div className="relative w-full py-8 overflow-hidden glass-card border-y border-white/10 rotate-[-2deg] scale-110 z-20 shadow-[0_0_40px_rgba(168,85,247,0.1)] backdrop-blur-2xl">
       <motion.div 
         className="flex whitespace-nowrap"
         animate={{ x: ["0%", "-50%"] }}
-        transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
+        transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
       >
-        {[...Array(2)].map((_, i) => (
+        {[...Array(4)].map((_, i) => (
           <div key={i} className="flex items-center gap-12 px-6">
             {items.map((item, idx) => (
-              <div key={idx} className="flex items-center gap-4 group">
-                <div className="p-4 rounded-2xl glass-card border border-white/5 shadow-inner group-hover:scale-110 group-hover:border-white/20 transition-all duration-500 shine-effect">
+              <div key={idx} className="flex items-center gap-6 group">
+                <div className="p-2 rounded-2xl glass-card border border-white/5 shadow-inner group-hover:scale-110 group-hover:border-white/20 transition-all duration-500 shine-effect bg-black/20">
                   {item.icon}
                 </div>
-                <span className="text-2xl md:text-4xl font-bold uppercase tracking-wider text-white/50 group-hover:text-white transition-colors duration-500">
+                <span className="text-3xl md:text-5xl font-black uppercase tracking-widest text-white/80 group-hover:text-white transition-colors duration-500 drop-shadow-[0_0_15px_rgba(168,85,247,0.5)]">
                   {item.text}
                 </span>
-                <span className="mx-6 text-white/10">✦</span>
+                <span className="mx-6 text-purple-500/50 text-3xl animate-pulse">✦</span>
               </div>
             ))}
           </div>
