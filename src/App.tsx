@@ -36,7 +36,7 @@ const AudioPlayer = ({ isPlaying, togglePlay }: { isPlaying: boolean, togglePlay
     <div className="fixed bottom-6 right-6 z-50">
       <audio 
         ref={audioRef} 
-        src="https://actions.google.com/sounds/v1/ambiences/space_ambience.ogg" 
+        src="https://upcdn.io/W23MTYW/raw/MONTAGEM_ALQUIMIA_PHONK_256KBPS.webm" 
         loop 
       />
       <button 
